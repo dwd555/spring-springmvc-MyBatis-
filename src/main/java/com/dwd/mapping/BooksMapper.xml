@@ -196,4 +196,8 @@
   <select id="selectAllBooks" resultMap="BaseResultMap">
   	SELECT * FROM books
   </select>
+  
+  <select id="bookGetByKw" parameterType="String" resultMap="BaseResultMap">
+  	SELECT * FROM books WHERE name LIKE #{kw} OR introduction LIKE #{kw} OR publish LIKE #{kw}
+  </select>
 </mapper>

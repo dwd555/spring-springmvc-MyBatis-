@@ -54,4 +54,5 @@ public interface BooksMapper {
     int updateByPrimaryKey(Books record);
     
     List<Books> selectAllBooks();
+    List<Books> bookGetByKw(String kw);
 }
