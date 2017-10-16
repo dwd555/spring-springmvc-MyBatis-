@@ -41,7 +41,7 @@
 		<property name="configLocation"
 			value="classpath:config/Configuration.xml">
 		</property>
-		<property name="mapperLocations" value="classpath*:com/dwd/mapping/*.xml"></property>
+		<property name="mapperLocations" value="classpath*:mapper/*.xml"></property>
 	</bean>
 	
 	
