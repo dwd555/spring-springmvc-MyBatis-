@@ -3,23 +3,46 @@ package com.dwd.controller;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dwd.dao.BooksMapper;
 import com.dwd.pojo.Books;
-
+@CrossOrigin(origins="*",maxAge=3600)//‘ –ÌøÁ”Ú
 @RestController
 @RequestMapping("/book")
 public class BooksController {
 	@Autowired
 	BooksMapper Books;
 	
-	@RequestMapping("/getbook")
-	public Books getBook(Integer id) {
-		Books book=Books.selectByPrimaryKey(1);
+	@RequestMapping("/booklist")
+	public List<Books> getBookList(Integer start) {
+		if(start==null) {
+			start=0;
+		}
+		List<Books> books=Books.getBookList(start);
+		return books;
+	}
+	@RequestMapping("bookdetail")
+	public Books selectByPrimaryKey(Integer bid) {
+		Books book=Books.selectByPrimaryKey(bid);
 		return book;
+	}
+	
+	@RequestMapping("advertisement")
+	public List<Books> advertisement(Integer bid){
+		List<Books> advertisement=Books.getAdvertisement(bid);
+		return advertisement;
+	}
+	
+	@RequestMapping("hot_search")
+	public List<Books> getHotSearch(){
+		List<Books> hotsearch=Books.hotSearch();
+		return hotsearch;
 	}
 	
 	@RequestMapping("/getall")
@@ -28,16 +51,9 @@ public class BooksController {
 		return books;
 	}
 	
-	@RequestMapping("/getbykw")
+	@RequestMapping("/book_getbykw")
 	public List<Books> getByKw(String kw){
 		System.out.println(kw);
-//		try {
-//			kw=new String(kw.getBytes("GBK"), "UTF-8");
-//		} catch (UnsupportedEncodingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		System.out.println("%"+kw+"%");
 		List<Books> books=Books.bookGetByKw("%"+kw+"%");
 		return books;
 	}

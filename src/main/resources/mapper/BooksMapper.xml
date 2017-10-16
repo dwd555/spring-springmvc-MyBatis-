@@ -8,8 +8,8 @@
     -->
     <id column="bid" jdbcType="INTEGER" property="bid" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="img_sm" jdbcType="VARCHAR" property="imgSm" />
-    <result column="img_lg" jdbcType="VARCHAR" property="imgLg" />
+    <result column="img_sm" jdbcType="VARCHAR" property="img_sm" />
+    <result column="img_lg" jdbcType="VARCHAR" property="img_lg" />
     <result column="author" jdbcType="VARCHAR" property="author" />
     <result column="publish" jdbcType="VARCHAR" property="publish" />
     <result column="star" jdbcType="INTEGER" property="star" />
@@ -52,8 +52,8 @@
       img_lg, author, publish, 
       star, comment, newprice, 
       oldprice, introduction)
-    values (#{bid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{imgSm,jdbcType=VARCHAR}, 
-      #{imgLg,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{publish,jdbcType=VARCHAR}, 
+    values (#{bid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{img_sm,jdbcType=VARCHAR}, 
+      #{img_lg,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{publish,jdbcType=VARCHAR}, 
       #{star,jdbcType=INTEGER}, #{comment,jdbcType=INTEGER}, #{newprice,jdbcType=REAL}, 
       #{oldprice,jdbcType=REAL}, #{introduction,jdbcType=VARCHAR})
   </insert>
@@ -70,10 +70,10 @@
       <if test="name != null">
         name,
       </if>
-      <if test="imgSm != null">
+      <if test="img_sm != null">
         img_sm,
       </if>
-      <if test="imgLg != null">
+      <if test="img_lg != null">
         img_lg,
       </if>
       <if test="author != null">
@@ -105,11 +105,11 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="imgSm != null">
-        #{imgSm,jdbcType=VARCHAR},
+      <if test="img_sm != null">
+        #{img_sm,jdbcType=VARCHAR},
       </if>
-      <if test="imgLg != null">
-        #{imgLg,jdbcType=VARCHAR},
+      <if test="img_lg != null">
+        #{img_lg,jdbcType=VARCHAR},
       </if>
       <if test="author != null">
         #{author,jdbcType=VARCHAR},
@@ -144,11 +144,11 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="imgSm != null">
-        img_sm = #{imgSm,jdbcType=VARCHAR},
+      <if test="img_sm != null">
+        img_sm = #{img_sm,jdbcType=VARCHAR},
       </if>
-      <if test="imgLg != null">
-        img_lg = #{imgLg,jdbcType=VARCHAR},
+      <if test="img_lg != null">
+        img_lg = #{img_lg,jdbcType=VARCHAR},
       </if>
       <if test="author != null">
         author = #{author,jdbcType=VARCHAR},
@@ -181,8 +181,8 @@
     -->
     update books
     set name = #{name,jdbcType=VARCHAR},
-      img_sm = #{imgSm,jdbcType=VARCHAR},
-      img_lg = #{imgLg,jdbcType=VARCHAR},
+      img_sm = #{img_sm,jdbcType=VARCHAR},
+      img_lg = #{img_lg,jdbcType=VARCHAR},
       author = #{author,jdbcType=VARCHAR},
       publish = #{publish,jdbcType=VARCHAR},
       star = #{star,jdbcType=INTEGER},
@@ -199,5 +199,31 @@
   
   <select id="bookGetByKw" parameterType="String" resultMap="BaseResultMap">
   	SELECT * FROM books WHERE name LIKE #{kw} OR introduction LIKE #{kw} OR publish LIKE #{kw}
+  </select>
+  
+  <select id="getBookList" parameterType="INTEGER" resultMap="BaseResultMap">
+  	SELECT * FROM books LIMIT #{start},5
+  </select>
+  
+   <resultMap id="advertisement" type="com.dwd.pojo.Books">
+    <id column="bid" jdbcType="INTEGER" property="bid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="img_sm" jdbcType="VARCHAR" property="img_sm" />
+    <result column="img_lg" jdbcType="VARCHAR" property="img_lg" />
+    <result column="publish" jdbcType="VARCHAR" property="publish" />
+    <result column="newprice" jdbcType="REAL" property="newprice" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+  </resultMap>
+  
+  <select id="getAdvertisement" parameterType="INTEGER" resultMap="advertisement">
+  	SELECT bid,img_sm,name,newprice,introduction FROM books WHERE bid!=#{bid} order by rand() limit 0,4
+  </select>
+  
+   <resultMap id="hotSearch" type="com.dwd.pojo.Books">
+    <id column="bid" jdbcType="INTEGER" property="bid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+  <select id="hotSearch" resultMap="hotSearch">
+  	SELECT name,bid FROM books ORDER BY comment DESC LIMIT 0,6
   </select>
 </mapper>

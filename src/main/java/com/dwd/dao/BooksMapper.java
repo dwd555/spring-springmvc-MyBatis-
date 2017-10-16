@@ -55,4 +55,7 @@ public interface BooksMapper {
     
     List<Books> selectAllBooks();
     List<Books> bookGetByKw(String kw);
+    List<Books> getBookList(Integer start);
+    List<Books> getAdvertisement(Integer bid);
+    List<Books> hotSearch();
 }
