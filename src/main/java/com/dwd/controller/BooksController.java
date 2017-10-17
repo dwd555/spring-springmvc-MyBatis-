@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dwd.dao.BooksMapper;
@@ -28,7 +29,7 @@ public class BooksController {
 		return books;
 	}
 	@RequestMapping("bookdetail")
-	public Books selectByPrimaryKey(Integer bid) {
+	public Books selectByPrimaryKey(@RequestParam Integer bid) {
 		Books book=Books.selectByPrimaryKey(bid);
 		return book;
 	}

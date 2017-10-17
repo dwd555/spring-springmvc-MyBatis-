@@ -1,5 +1,7 @@
 package com.dwd.dao;
 
+import java.util.function.LongToIntFunction;
+
 import com.dwd.pojo.BookUser;
 
 public interface BookUserMapper {
@@ -50,4 +52,6 @@ public interface BookUserMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(BookUser record);
+    
+    BookUser login(Long phone,String password);
 }
