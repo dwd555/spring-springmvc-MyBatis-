@@ -3,3 +3,4 @@
 2、模糊查询可以在字符串自行拼接"%"+string+"%"<br />
 3、mapper.xml最好放在resources目录下，不然执行打包命令时不会打包进去，会报Invalid bound statement (not found)错误<br />
 4、@CrossOrigin(origins="*",maxAge=3600)//允许跨域<br />
+5、Mybatis传入多个类型参数使用#{param1}#{param2}<br />
